@@ -83,6 +83,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Dot pattern background */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
 /* Base body styles */
 body {
   font-family: 'Inter', system-ui, sans-serif;
