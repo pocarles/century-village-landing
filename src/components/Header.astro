@@ -1,11 +1,12 @@
 ---
+const base = import.meta.env.BASE_URL;
 const navLinks = [
-  { href: "/#features", label: "Features" },
-  { href: "/#how-it-works", label: "How It Works" },
-  { href: "/#testimonials", label: "Testimonials" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/changelog", label: "Changelog" },
-  { href: "/resources/survival-guide", label: "Resources" },
+  { href: `${base}/#features`, label: "Features" },
+  { href: `${base}/#how-it-works`, label: "How It Works" },
+  { href: `${base}/#testimonials`, label: "Testimonials" },
+  { href: `${base}/#pricing`, label: "Pricing" },
+  { href: `${base}/changelog`, label: "Changelog" },
+  { href: `${base}/resources/survival-guide`, label: "Resources" },
 ];
 ---
 
@@ -13,7 +14,7 @@ const navLinks = [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16 md:h-20">
       <!-- Logo -->
-      <a href="/" class="flex items-center space-x-2">
+      <a href={`${base}/`} class="flex items-center space-x-2">
         <img src={`${import.meta.env.BASE_URL}/logo.png`} alt="CenturySync" class="h-10 w-auto" />
         <span class="text-xl font-bold">
           <span class="text-primary-600">Century</span><span class="text-gray-800">Sync</span>
@@ -45,7 +46,7 @@ const navLinks = [
         </a>
 
         <!-- Request Demo Button -->
-        <a href="/#demo" class="hidden sm:inline-flex items-center px-5 py-2.5 bg-primary-600 text-white font-semibold rounded-full hover:bg-primary-700 transition-all btn-shine text-sm">
+        <a href={`${base}/#demo`} class="hidden sm:inline-flex items-center px-5 py-2.5 bg-primary-600 text-white font-semibold rounded-full hover:bg-primary-700 transition-all btn-shine text-sm">
           Request Demo
         </a>
 
@@ -79,7 +80,7 @@ const navLinks = [
           </svg>
           Member Sign-in
         </a>
-        <a href="/#demo" class="block py-2 text-primary-600 font-semibold">Request Demo</a>
+        <a href={`${base}/#demo`} class="block py-2 text-primary-600 font-semibold">Request Demo</a>
       </div>
     </div>
   </div>
