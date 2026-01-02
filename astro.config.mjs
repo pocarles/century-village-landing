@@ -6,7 +6,8 @@ import tailwind from '@astrojs/tailwind';
 // https://astro.build/config
 export default defineConfig({
   // Site URL for canonical links and sitemap
-  site: 'https://centurysync.com',
+  site: 'https://pocarles.github.io',
+  base: '/century-village-landing',
 
   // Integrations
   integrations: [sitemap(), tailwind()],
