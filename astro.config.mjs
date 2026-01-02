@@ -2,8 +2,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-import tailwindcss from '@tailwindcss/vite';
-
 // https://astro.build/config
 export default defineConfig({
   // Site URL for canonical links and sitemap
@@ -25,18 +23,11 @@ export default defineConfig({
   compressHTML: true,
 
   vite: {
-    plugins: [tailwindcss()],
     build: {
       // Minify CSS
       cssMinify: true,
       // Minify JS
       minify: 'esbuild',
-      // Optimize chunks
-      rollupOptions: {
-        output: {
-          manualChunks: undefined,
-        },
-      },
     },
   },
 });
