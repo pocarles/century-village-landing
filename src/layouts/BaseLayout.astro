@@ -1,0 +1,172 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalURL?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = "Florida COA management platform built for Century Village West Palm Beach. Stay compliant with HB 1021 & HB 913. Document management, owner communication, compliance tracking for 309 associations.",
+  canonicalURL = Astro.url.href,
+  ogImage = "/og-image.png"
+} = Astro.props;
+
+const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Management for Century Village" : `${title} | CenturySync`;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{siteTitle}</title>
+  <meta name="description" content={description}>
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href={canonicalURL}>
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={canonicalURL}>
+  <meta property="og:title" content={siteTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={ogImage}>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={siteTitle}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
+  <!-- Theme Color for Mobile Browsers -->
+  <meta name="theme-color" content="#7b61ff">
+  <meta name="msapplication-TileColor" content="#7b61ff">
+
+  <!-- DNS Prefetch for External Resources -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+  <!-- Google Fonts - Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Font with display=swap for better performance -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics Placeholder -->
+  <!-- TODO: Replace GA_MEASUREMENT_ID with your Google Analytics 4 Measurement ID -->
+  <script is:inline>
+    // Google Analytics 4 placeholder
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // gtag('config', 'GA_MEASUREMENT_ID'); // Uncomment and replace with your GA4 ID
+  </script>
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "CenturySync",
+    "description": "Florida COA management platform built for Century Village West Palm Beach",
+    "url": "https://centurysync.com",
+    "logo": "https://centurysync.com/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-561-562-4300",
+      "contactType": "sales",
+      "email": "hello@centurysync.com",
+      "areaServed": "US",
+      "availableLanguage": "English"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "West Palm Beach",
+      "addressRegion": "FL",
+      "addressCountry": "US"
+    },
+    "sameAs": []
+  })} />
+</head>
+<body class="font-sans antialiased text-gray-900 overflow-x-hidden">
+  <Header />
+
+  <main>
+    <slot />
+  </main>
+
+  <Footer />
+
+  <!-- Scroll Reveal Script -->
+  <script is:inline>
+    // Scroll reveal animation
+    function reveal() {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(element => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', reveal);
+    reveal();
+
+    // Number counter animation
+    function animateCounters() {
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        const text = counter.textContent;
+        const hasPlus = text.includes('+');
+        const hasPercent = text.includes('%');
+        const hasK = text.includes('K');
+        const hasComma = text.includes(',');
+        let target = parseInt(text.replace(/[^0-9]/g, ''));
+        if (hasK) target = parseInt(text.replace('K', '').replace('+', ''));
+        if (hasComma) target = parseInt(text.replace(',', ''));
+        let current = 0;
+        const increment = target / 50;
+        const stepTime = 40;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          let displayValue = Math.floor(current);
+          if (hasComma && displayValue >= 1000) displayValue = displayValue.toLocaleString();
+          if (hasK) displayValue = displayValue + 'K';
+          if (hasPlus) displayValue = displayValue + '+';
+          if (hasPercent) displayValue = displayValue + '%';
+          counter.textContent = displayValue;
+        }, stepTime);
+      });
+    }
+
+    // Trigger counter animation when in view
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    const statsSection = document.querySelector('.counter')?.closest('section');
+    if (statsSection) counterObserver.observe(statsSection);
+  </script>
+</body>
+</html>

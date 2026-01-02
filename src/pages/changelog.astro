@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const changelog = [
+  {
+    date: "October 2025",
+    tag: "New Feature",
+    tagColor: "bg-green-100 text-green-700",
+    title: "Board Liaisons",
+    summary: "Introducing a new support role for associations. Liaisons can handle tasks without decision-making authority, helping reduce board member workload while preserving governance structure. Every action is tracked and timestamped for full transparency.",
+    highlights: [
+      "Assign tasks to liaisons (owners, tenants, property managers, or external helpers)",
+      "Full audit trail for all liaison actions",
+      "Preserves board authority while reducing member workload"
+    ]
+  },
+  {
+    date: "September 2025",
+    tag: "Compliance",
+    tagColor: "bg-blue-100 text-blue-700",
+    title: "Automatic Compliance Tracking",
+    summary: "New board members now receive personalized onboarding with certification reminders at crucial intervals. The system automatically alerts the board when deadlines approach, ensuring adherence to Florida's 90-day certification requirement.",
+    highlights: [
+      "Personalized welcome guidance for new board members",
+      "Automatic certification reminders at key intervals",
+      "Board-wide deadline alerts"
+    ]
+  },
+  {
+    date: "August 2025",
+    tag: "Enhancement",
+    tagColor: "bg-purple-100 text-purple-700",
+    title: "Multi-Building Access",
+    summary: "For board members and property managers working with multiple communities, you can now access all your buildings with a single login. Permissions automatically adjust based on your role in each building.",
+    highlights: [
+      "One login for all your communities",
+      "Automatic role-based permission adjustment",
+      "Privacy preserved across properties"
+    ]
+  },
+  {
+    date: "August 2025",
+    tag: "New Feature",
+    tagColor: "bg-green-100 text-green-700",
+    title: "Email-to-Upload",
+    summary: "Each building now has a dedicated email address for document submission. Simply email documents to your building's address, and our AI automatically indexes and categorizes them—no manual sorting required.",
+    highlights: [
+      "Dedicated email address per building",
+      "Automatic AI-powered indexing",
+      "Zero manual filing needed"
+    ]
+  },
+  {
+    date: "July 2025",
+    tag: "Enhancement",
+    tagColor: "bg-purple-100 text-purple-700",
+    title: "Multi-Format Document Support",
+    summary: "We now accept PDFs, Word, Excel, markdown, JSON, text, and images (including HEIC from iPhones). Documents are automatically recognized and classified by type and year.",
+    highlights: [
+      "Support for all common file formats",
+      "Automatic document type recognition",
+      "Bridges digital and paper-based workflows"
+    ]
+  },
+  {
+    date: "July 2025",
+    tag: "New Feature",
+    tagColor: "bg-green-100 text-green-700",
+    title: "Centralized Requests Portal",
+    summary: "All maintenance requests, billing inquiries, and general questions now flow through a single portal. Requests are automatically routed to the right person, and a public-facing version helps prospective buyers and realtors.",
+    highlights: [
+      "Single portal for all request types",
+      "Automatic routing to the right person",
+      "Public version for prospective buyers"
+    ]
+  },
+  {
+    date: "June 2025",
+    tag: "Community",
+    tagColor: "bg-yellow-100 text-yellow-700",
+    title: "Positive Newsfeed",
+    summary: "Board members now receive a weekly curated feed of positive stories from Florida and worldwide. Designed to inspire, entertain, and spark conversation—because board service shouldn't be all stress.",
+    highlights: [
+      "Weekly curated positive stories",
+      "Evergreen content from Florida and beyond",
+      "Designed to inspire and entertain"
+    ]
+  },
+  {
+    date: "May 2025",
+    tag: "Century Village",
+    tagColor: "bg-primary-100 text-primary-700",
+    title: "Century Village Hub",
+    summary: "A dedicated space for Century Village, West Palm Beach residents with centralized UCO and WPRF information. This is the first step toward a scalable meta-app for large communities with multiple COAs.",
+    highlights: [
+      "Centralized UCO and WPRF information",
+      "Designed specifically for Century Village",
+      "Scalable for large communities"
+    ]
+  },
+  {
+    date: "April 2025",
+    tag: "Enhancement",
+    tagColor: "bg-purple-100 text-purple-700",
+    title: "Smarter Document Access",
+    summary: "Search, browse, and preview documents with instant indexing. Filter by category or year, and access documents seamlessly across multiple communities.",
+    highlights: [
+      "Instant search across all documents",
+      "Filter by category or year",
+      "Works seamlessly across communities"
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Changelog"
+  description="See what's new at CenturySync. Feature updates, improvements, and enhancements to our Florida COA management platform."
+>
+  <section class="pt-32 pb-20 bg-gradient-to-br from-gray-50 via-primary-50/30 to-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <div class="inline-flex items-center px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-6">
+          What's New
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          <span class="gradient-text">Changelog</span>
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          We're constantly improving CenturySync to better serve Century Village associations. Here's what we've been working on.
+        </p>
+      </div>
+
+      <!-- Changelog entries -->
+      <div class="space-y-8">
+        {changelog.map((entry, index) => (
+          <article class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all reveal card-hover">
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              <time class="text-sm font-medium text-gray-500">{entry.date}</time>
+              <span class={`px-3 py-1 rounded-full text-xs font-semibold ${entry.tagColor}`}>
+                {entry.tag}
+              </span>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 mb-3">{entry.title}</h2>
+            <p class="text-gray-600 mb-4">{entry.summary}</p>
+
+            <ul class="space-y-2">
+              {entry.highlights.map((highlight) => (
+                <li class="flex items-start gap-2 text-sm text-gray-600">
+                  <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <!-- CTA Section -->
+      <div class="mt-16 text-center reveal">
+        <div class="bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl p-8 md:p-12">
+          <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">
+            Want to see these features in action?
+          </h2>
+          <p class="text-primary-100 mb-6 max-w-xl mx-auto">
+            Schedule a demo and we'll show you how CenturySync can transform your association's operations.
+          </p>
+          <a href="/#demo" class="inline-flex items-center px-8 py-4 bg-white text-primary-700 font-bold rounded-full hover:bg-gray-100 transition-all btn-shine">
+            Schedule Your Demo
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
