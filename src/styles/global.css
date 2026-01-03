@@ -260,6 +260,13 @@
   /* Testimonial Carousel */
   .testimonial-slides {
     position: relative;
+    min-height: 320px; /* Fixed height to prevent layout shift */
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-slides {
+      min-height: 280px;
+    }
   }
 
   .testimonial-slide {
