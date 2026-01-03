@@ -53,15 +53,28 @@ const webhookUrl = "https://your-n8n-instance.com/webhook/contact-form";
       >
     </div>
 
-    <div class="space-y-2">
-      <label for="building" class="block text-sm font-semibold text-gray-700">Building Name</label>
-      <input
-        type="text"
-        id="building"
-        name="building"
-        class="input-field"
-        placeholder="e.g., Andover A"
-      >
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="space-y-2">
+        <label for="building" class="block text-sm font-semibold text-gray-700">Building Name</label>
+        <input
+          type="text"
+          id="building"
+          name="building"
+          class="input-field"
+          placeholder="e.g., Andover A"
+        >
+      </div>
+      <div class="space-y-2">
+        <label for="units" class="block text-sm font-semibold text-gray-700">Number of Units</label>
+        <input
+          type="number"
+          id="units"
+          name="units"
+          min="1"
+          class="input-field"
+          placeholder="e.g., 48"
+        >
+      </div>
     </div>
 
     <div class="space-y-2">
@@ -174,6 +187,7 @@ const webhookUrl = "https://your-n8n-instance.com/webhook/contact-form";
       email: form.email.value,
       phone: form.phone.value,
       building: form.building.value,
+      units: form.units.value ? parseInt(form.units.value, 10) : null,
       role: form.role.value,
       message: form.message.value,
       source: 'centurysync.com',
