@@ -260,24 +260,28 @@
   /* Testimonial Carousel */
   .testimonial-slides {
     position: relative;
-    min-height: 320px; /* Fixed height to prevent layout shift */
+    height: 340px; /* Fixed height to prevent layout shift */
   }
 
   @media (min-width: 768px) {
     .testimonial-slides {
-      min-height: 280px;
+      height: 300px;
     }
   }
 
   .testimonial-slide {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     opacity: 0;
-    transition: opacity 0.5s var(--ease-stripe);
+    visibility: hidden;
+    transition: opacity 0.5s var(--ease-stripe), visibility 0.5s var(--ease-stripe);
   }
 
   .testimonial-slide.active {
-    display: block;
     opacity: 1;
+    visibility: visible;
   }
 
   /* Navigation dots */
