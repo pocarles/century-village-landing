@@ -195,21 +195,16 @@ const webhookUrl = "https://workflows-api.softr.io/v1/workflows/a6cb893e-3ffc-48
     };
 
     try {
-      // Using no-cors mode because Softr webhook doesn't return CORS headers
-      // This means we can't read the response, but the request will be sent
-      await fetch(webhookUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-        body: JSON.stringify(formData)
-      });
+      // Use sendBeacon for reliable delivery - it sends with application/json content type
+      const blob = new Blob([JSON.stringify(formData)], { type: 'application/json' });
+      const sent = navigator.sendBeacon(webhookUrl, blob);
 
-      // With no-cors mode, we assume success if no network error occurred
-      // The webhook will receive the data even though we can't read the response
-      successMsg.classList.remove('hidden');
-      form.reset();
+      if (sent) {
+        successMsg.classList.remove('hidden');
+        form.reset();
+      } else {
+        throw new Error('sendBeacon failed');
+      }
     } catch (error) {
       console.error('Form submission error:', error);
       errorMsg.classList.remove('hidden');
