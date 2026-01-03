@@ -147,8 +147,14 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
       }
     }, { passive: true });
 
-    // Initial reveal
-    reveal();
+    // Initial reveal - run when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', reveal);
+    } else {
+      reveal();
+    }
+    // Also run on load as fallback
+    window.addEventListener('load', reveal);
 
     // Number counter animation
     function animateCounters() {
