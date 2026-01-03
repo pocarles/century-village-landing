@@ -535,11 +535,79 @@ import ContactForm from '../components/ContactForm.astro';
 
           <!-- Navigation Dots -->
           <div class="flex justify-center gap-3 mt-8 relative z-10" role="tablist" aria-label="Testimonial navigation">
-            <button type="button" class="testimonial-dot active" data-index="0" aria-label="Show testimonial 1" aria-selected="true" role="tab"></button>
-            <button type="button" class="testimonial-dot" data-index="1" aria-label="Show testimonial 2" aria-selected="false" role="tab"></button>
-            <button type="button" class="testimonial-dot" data-index="2" aria-label="Show testimonial 3" aria-selected="false" role="tab"></button>
+            <button type="button" class="testimonial-dot active" id="dot-0" onclick="showTestimonial(0)" aria-label="Show testimonial 1" aria-selected="true" role="tab"></button>
+            <button type="button" class="testimonial-dot" id="dot-1" onclick="showTestimonial(1)" aria-label="Show testimonial 2" aria-selected="false" role="tab"></button>
+            <button type="button" class="testimonial-dot" id="dot-2" onclick="showTestimonial(2)" aria-label="Show testimonial 3" aria-selected="false" role="tab"></button>
           </div>
         </div>
+
+        <!-- Carousel Script - Self-contained for reliability -->
+        <script is:inline>
+          (function() {
+            var currentSlide = 0;
+            var totalSlides = 3;
+            var autoplayTimer = null;
+            var AUTOPLAY_DELAY = 6000;
+
+            window.showTestimonial = function(index) {
+              // Hide all slides
+              for (var i = 0; i < totalSlides; i++) {
+                var slide = document.querySelector('.testimonial-slide[data-index="' + i + '"]');
+                var dot = document.getElementById('dot-' + i);
+                if (slide) {
+                  slide.classList.remove('active');
+                }
+                if (dot) {
+                  dot.classList.remove('active');
+                  dot.setAttribute('aria-selected', 'false');
+                }
+              }
+              // Show target slide
+              var targetSlide = document.querySelector('.testimonial-slide[data-index="' + index + '"]');
+              var targetDot = document.getElementById('dot-' + index);
+              if (targetSlide) {
+                targetSlide.classList.add('active');
+              }
+              if (targetDot) {
+                targetDot.classList.add('active');
+                targetDot.setAttribute('aria-selected', 'true');
+              }
+              currentSlide = index;
+              // Restart autoplay
+              startAutoplay();
+            };
+
+            function nextSlide() {
+              var next = (currentSlide + 1) % totalSlides;
+              window.showTestimonial(next);
+            }
+
+            function startAutoplay() {
+              if (autoplayTimer) {
+                clearInterval(autoplayTimer);
+              }
+              autoplayTimer = setInterval(nextSlide, AUTOPLAY_DELAY);
+            }
+
+            // Start autoplay on load (respects reduced motion)
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              startAutoplay();
+            }
+
+            // Pause on hover
+            var carousel = document.getElementById('testimonial-carousel');
+            if (carousel) {
+              carousel.addEventListener('mouseenter', function() {
+                if (autoplayTimer) clearInterval(autoplayTimer);
+              });
+              carousel.addEventListener('mouseleave', function() {
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                  startAutoplay();
+                }
+              });
+            }
+          })();
+        </script>
       </div><!-- End testimonials subsection -->
     </div>
   </section>
