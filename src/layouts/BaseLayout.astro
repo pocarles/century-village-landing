@@ -100,9 +100,12 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
   })} />
 </head>
 <body class="font-sans antialiased text-gray-900 overflow-x-hidden">
+  <!-- Skip to content link for keyboard users -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <Header />
 
-  <main>
+  <main id="main-content">
     <slot />
   </main>
 
@@ -110,19 +113,41 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
 
   <!-- Scroll Reveal Script -->
   <script is:inline>
-    // Scroll reveal animation
+    // Premium scroll reveal animation with stagger support
     function reveal() {
       const reveals = document.querySelectorAll('.reveal');
-      reveals.forEach(element => {
-        const windowHeight = window.innerHeight;
+      const windowHeight = window.innerHeight;
+
+      reveals.forEach((element) => {
         const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
+        const elementVisible = 100; // Trigger earlier for smoother feel
+
         if (elementTop < windowHeight - elementVisible) {
+          // Add staggered delay for grid children
+          const parent = element.closest('.reveal-stagger');
+          if (parent) {
+            const siblings = Array.from(parent.querySelectorAll('.reveal'));
+            const siblingIndex = siblings.indexOf(element);
+            element.style.transitionDelay = `${siblingIndex * 75}ms`;
+          }
           element.classList.add('active');
         }
       });
     }
-    window.addEventListener('scroll', reveal);
+
+    // Use requestAnimationFrame for smooth scroll handling
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          reveal();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial reveal
     reveal();
 
     // Number counter animation

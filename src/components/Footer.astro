@@ -2,25 +2,25 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-gray-900 text-white py-16">
+<footer class="bg-gray-900 text-white py-16 md:py-20">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid md:grid-cols-4 gap-12 mb-12">
       <!-- Brand -->
       <div class="md:col-span-2">
-        <a href={`${import.meta.env.BASE_URL}/`} class="flex items-center space-x-2 mb-4">
-          <img src={`${import.meta.env.BASE_URL}/logo.png`} alt="CenturySync" class="h-10 w-auto" />
+        <a href={`${import.meta.env.BASE_URL}/`} class="flex items-center space-x-2 mb-4 group">
+          <img src={`${import.meta.env.BASE_URL}/logo.png`} alt="CenturySync" class="h-10 w-auto transition-transform duration-150 ease-stripe group-hover:scale-105" />
           <span class="text-xl font-bold">
             <span class="text-primary-400">Century</span><span class="text-white">Sync</span>
           </span>
         </a>
-        <p class="text-gray-400 max-w-md mb-6">
+        <p class="text-gray-400 max-w-md mb-6 text-body-sm">
           The smarter way to manage your Century Village association. Built for Florida COAs, designed for your community.
         </p>
         <div class="flex space-x-4">
-          <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" aria-label="Facebook">
+          <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-all duration-150 ease-stripe hover:scale-105" aria-label="Facebook">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </a>
-          <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors" aria-label="Twitter">
+          <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-all duration-150 ease-stripe hover:scale-105" aria-label="Twitter">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
           </a>
         </div>
@@ -30,12 +30,12 @@ const currentYear = new Date().getFullYear();
       <div>
         <h4 class="font-semibold text-white mb-4">Product</h4>
         <ul class="space-y-3">
-          <li><a href={`${import.meta.env.BASE_URL}/#features`} class="text-gray-400 hover:text-white transition-colors">Features</a></li>
-          <li><a href={`${import.meta.env.BASE_URL}/#pricing`} class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
-          <li><a href={`${import.meta.env.BASE_URL}/#testimonials`} class="text-gray-400 hover:text-white transition-colors">Testimonials</a></li>
-          <li><a href={`${import.meta.env.BASE_URL}/#compliance`} class="text-gray-400 hover:text-white transition-colors">Florida Compliance</a></li>
-          <li><a href={`${import.meta.env.BASE_URL}/changelog`} class="text-gray-400 hover:text-white transition-colors">Changelog</a></li>
-          <li><a href={`${import.meta.env.BASE_URL}/resources/survival-guide`} class="text-gray-400 hover:text-white transition-colors">Survival Guide</a></li>
+          <li><a href={`${import.meta.env.BASE_URL}/#features`} class="text-gray-400 hover:text-white transition-colors duration-150 ease-stripe">Features</a></li>
+          <li><a href={`${import.meta.env.BASE_URL}/#pricing`} class="text-gray-400 hover:text-white transition-colors duration-150 ease-stripe">Pricing</a></li>
+          <li><a href={`${import.meta.env.BASE_URL}/#testimonials`} class="text-gray-400 hover:text-white transition-colors duration-150 ease-stripe">Testimonials</a></li>
+          <li><a href={`${import.meta.env.BASE_URL}/#compliance`} class="text-gray-400 hover:text-white transition-colors duration-150 ease-stripe">Florida Compliance</a></li>
+          <li><a href={`${import.meta.env.BASE_URL}/changelog`} class="text-gray-400 hover:text-white transition-colors duration-150 ease-stripe">Changelog</a></li>
+          <li><a href={`${import.meta.env.BASE_URL}/resources/survival-guide`} class="text-gray-400 hover:text-white transition-colors duration-150 ease-stripe">Survival Guide</a></li>
         </ul>
       </div>
 
@@ -45,11 +45,11 @@ const currentYear = new Date().getFullYear();
         <ul class="space-y-3">
           <li class="text-gray-400">
             <span class="block text-sm text-gray-500">Phone</span>
-            <a href="tel:+15615624300" class="hover:text-white transition-colors">(561) 562-4300</a>
+            <a href="tel:+15615624300" class="hover:text-white transition-colors duration-150 ease-stripe">(561) 562-4300</a>
           </li>
           <li class="text-gray-400">
             <span class="block text-sm text-gray-500">Email</span>
-            <a href="mailto:hello@centurysync.com" class="hover:text-white transition-colors">hello@centurysync.com</a>
+            <a href="mailto:hello@centurysync.com" class="hover:text-white transition-colors duration-150 ease-stripe">hello@centurysync.com</a>
           </li>
           <li class="text-gray-400">
             <span class="block text-sm text-gray-500">Location</span>
@@ -68,8 +68,8 @@ const currentYear = new Date().getFullYear();
           &copy; 2011-{currentYear} CenturySync, Apiruck LLC. All rights reserved.
         </p>
         <div class="flex space-x-6 text-sm">
-          <a href={`${import.meta.env.BASE_URL}/privacy-policy`} class="text-gray-500 hover:text-white transition-colors">Privacy Policy</a>
-          <a href={`${import.meta.env.BASE_URL}/terms-of-service`} class="text-gray-500 hover:text-white transition-colors">Terms of Service</a>
+          <a href={`${import.meta.env.BASE_URL}/privacy-policy`} class="text-gray-500 hover:text-white transition-colors duration-150 ease-stripe">Privacy Policy</a>
+          <a href={`${import.meta.env.BASE_URL}/terms-of-service`} class="text-gray-500 hover:text-white transition-colors duration-150 ease-stripe">Terms of Service</a>
         </div>
       </div>
     </div>
