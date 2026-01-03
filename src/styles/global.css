@@ -275,11 +275,14 @@
 
   /* Navigation dots */
   .testimonial-dot {
-    @apply w-3 h-3 rounded-full bg-gray-300 transition-all duration-200 ease-stripe;
+    @apply w-3 h-3 rounded-full bg-gray-400 transition-all duration-200 ease-stripe;
+    cursor: pointer;
+    border: none;
+    padding: 0;
   }
 
   .testimonial-dot:hover {
-    @apply bg-gray-400;
+    @apply bg-gray-500;
   }
 
   .testimonial-dot.active {
