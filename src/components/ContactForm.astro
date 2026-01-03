@@ -194,38 +194,59 @@ const webhookUrl = "https://workflows-api.softr.io/v1/workflows/a6cb893e-3ffc-48
       submittedAt: new Date().toISOString()
     };
 
-    // Create FormData for URL-encoded submission (works with no-cors)
-    const urlEncodedData = new URLSearchParams();
-    Object.keys(formData).forEach(key => {
-      if (formData[key] !== null && formData[key] !== undefined) {
-        urlEncodedData.append(key, String(formData[key]));
-      }
-    });
-
     try {
-      // Use fetch with no-cors and form-urlencoded (most compatible format)
-      await fetch(webhookUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        cache: 'no-cache',
-        credentials: 'omit',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: urlEncodedData.toString()
+      // Use hidden iframe technique to bypass CORS entirely
+      // This works because traditional form POSTs aren't subject to CORS
+      let iframe = document.getElementById('webhook-iframe');
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.id = 'webhook-iframe';
+        iframe.name = 'webhook-iframe';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+      }
+
+      // Create a temporary form that posts to the hidden iframe
+      const tempForm = document.createElement('form');
+      tempForm.method = 'POST';
+      tempForm.action = webhookUrl;
+      tempForm.target = 'webhook-iframe';
+      tempForm.style.display = 'none';
+
+      // Add hidden fields for each data item
+      Object.keys(formData).forEach(key => {
+        if (formData[key] !== null && formData[key] !== undefined) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = String(formData[key]);
+          tempForm.appendChild(input);
+        }
       });
 
-      // Also try sendBeacon with JSON blob as backup
-      const blob = new Blob([JSON.stringify(formData)], { type: 'application/json' });
-      navigator.sendBeacon(webhookUrl, blob);
+      // Submit the form to the iframe
+      document.body.appendChild(tempForm);
+      tempForm.submit();
 
-      // Show success (with no-cors we can't verify, but data is sent)
-      successMsg.classList.remove('hidden');
-      form.reset();
+      // Clean up the temporary form after a short delay
+      setTimeout(() => {
+        if (tempForm.parentNode) {
+          document.body.removeChild(tempForm);
+        }
+      }, 1000);
+
+      // Show success after a brief delay to allow the form to submit
+      setTimeout(() => {
+        successMsg.classList.remove('hidden');
+        form.reset();
+        submitBtn.disabled = false;
+        btnText.classList.remove('hidden');
+        btnSpinner.classList.add('hidden');
+      }, 1500);
+
     } catch (error) {
       console.error('Form submission error:', error);
       errorMsg.classList.remove('hidden');
-    } finally {
       submitBtn.disabled = false;
       btnText.classList.remove('hidden');
       btnSpinner.classList.add('hidden');
