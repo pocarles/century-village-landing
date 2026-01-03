@@ -194,17 +194,34 @@ const webhookUrl = "https://workflows-api.softr.io/v1/workflows/a6cb893e-3ffc-48
       submittedAt: new Date().toISOString()
     };
 
-    try {
-      // Use sendBeacon for reliable delivery - it sends with application/json content type
-      const blob = new Blob([JSON.stringify(formData)], { type: 'application/json' });
-      const sent = navigator.sendBeacon(webhookUrl, blob);
-
-      if (sent) {
-        successMsg.classList.remove('hidden');
-        form.reset();
-      } else {
-        throw new Error('sendBeacon failed');
+    // Create FormData for URL-encoded submission (works with no-cors)
+    const urlEncodedData = new URLSearchParams();
+    Object.keys(formData).forEach(key => {
+      if (formData[key] !== null && formData[key] !== undefined) {
+        urlEncodedData.append(key, String(formData[key]));
       }
+    });
+
+    try {
+      // Use fetch with no-cors and form-urlencoded (most compatible format)
+      await fetch(webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        cache: 'no-cache',
+        credentials: 'omit',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: urlEncodedData.toString()
+      });
+
+      // Also try sendBeacon with JSON blob as backup
+      const blob = new Blob([JSON.stringify(formData)], { type: 'application/json' });
+      navigator.sendBeacon(webhookUrl, blob);
+
+      // Show success (with no-cors we can't verify, but data is sent)
+      successMsg.classList.remove('hidden');
+      form.reset();
     } catch (error) {
       console.error('Form submission error:', error);
       errorMsg.classList.remove('hidden');

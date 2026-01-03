@@ -8,16 +8,21 @@ interface Props {
   description?: string;
   canonicalURL?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
+
+const siteUrl = "https://centurysync.com";
 
 const {
   title,
   description = "Florida COA management platform built for Century Village West Palm Beach. Stay compliant with HB 1021 & HB 913. Document management, owner communication, compliance tracking for 309 associations.",
   canonicalURL = Astro.url.href,
-  ogImage = "/og-image.png"
+  ogImage = `${siteUrl}/og-image.png`,
+  noindex = false
 } = Astro.props;
 
 const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Management for Century Village" : `${title} | CenturySync`;
+const absoluteOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
 <!DOCTYPE html>
@@ -28,6 +33,13 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
   <title>{siteTitle}</title>
   <meta name="description" content={description}>
 
+  <!-- Robots -->
+  {noindex ? (
+    <meta name="robots" content="noindex, nofollow">
+  ) : (
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  )}
+
   <!-- Canonical URL -->
   <link rel="canonical" href={canonicalURL}>
 
@@ -36,13 +48,18 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
   <meta property="og:url" content={canonicalURL}>
   <meta property="og:title" content={siteTitle}>
   <meta property="og:description" content={description}>
-  <meta property="og:image" content={ogImage}>
+  <meta property="og:image" content={absoluteOgImage}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="CenturySync">
+  <meta property="og:locale" content="en_US">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={siteTitle}>
   <meta name="twitter:description" content={description}>
-  <meta name="twitter:image" content={ogImage}>
+  <meta name="twitter:image" content={absoluteOgImage}>
+  <meta name="twitter:site" content="@centurysync">
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -77,14 +94,21 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
   </script>
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
 
-  <!-- JSON-LD Structured Data -->
+  <!-- JSON-LD Structured Data: Organization -->
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://centurysync.com/#organization",
     "name": "CenturySync",
+    "alternateName": "Century Sync",
     "description": "Florida COA management platform built for Century Village West Palm Beach",
     "url": "https://centurysync.com",
-    "logo": "https://centurysync.com/logo.png",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://centurysync.com/logo.png",
+      "width": 512,
+      "height": 512
+    },
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+1-561-562-4300",
@@ -95,14 +119,99 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
     },
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "100-110 Century Blvd, Suite 202",
       "addressLocality": "West Palm Beach",
       "addressRegion": "FL",
+      "postalCode": "33417",
       "addressCountry": "US"
     },
     "sameAs": [
       "https://www.facebook.com/profile.php?id=61575503064716",
       "https://www.instagram.com/century.sync/"
+    ],
+    "foundingDate": "2011",
+    "numberOfEmployees": {
+      "@type": "QuantitativeValue",
+      "minValue": 1,
+      "maxValue": 10
+    }
+  })} />
+
+  <!-- JSON-LD Structured Data: WebSite (for Sitelinks Search Box) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://centurysync.com/#website",
+    "name": "CenturySync",
+    "url": "https://centurysync.com",
+    "description": "Florida COA management platform built for Century Village West Palm Beach",
+    "publisher": {
+      "@id": "https://centurysync.com/#organization"
+    },
+    "inLanguage": "en-US"
+  })} />
+
+  <!-- JSON-LD Structured Data: SoftwareApplication -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CenturySync",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, iOS, Android",
+    "description": "COA management platform with document storage, owner communication, compliance tracking, and mobile apps for Florida condominium associations.",
+    "url": "https://centurysync.com",
+    "offers": {
+      "@type": "Offer",
+      "price": "79.00",
+      "priceCurrency": "USD",
+      "priceValidUntil": "2026-12-31",
+      "description": "Monthly base fee plus $1.50 per unit"
+    },
+    "provider": {
+      "@id": "https://centurysync.com/#organization"
+    },
+    "featureList": [
+      "Unlimited document storage",
+      "Full-text search",
+      "Email and SMS notifications",
+      "Mobile apps for iOS and Android",
+      "Compliance deadline tracking",
+      "Tenant and lease management",
+      "Public-facing community websites",
+      "Cross-building board forum"
     ]
+  })} />
+
+  <!-- JSON-LD Structured Data: LocalBusiness (for Office Hours) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://centurysync.com/#localbusiness",
+    "name": "CenturySync Office Hours",
+    "description": "Weekly in-person office hours for Century Village board members",
+    "url": "https://centurysync.com",
+    "telephone": "+1-561-562-4300",
+    "email": "hello@centurysync.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "100-110 Century Blvd, Suite 202",
+      "addressLocality": "West Palm Beach",
+      "addressRegion": "FL",
+      "postalCode": "33417",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 26.6974,
+      "longitude": -80.1067
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Wednesday",
+      "opens": "14:00",
+      "closes": "17:00"
+    },
+    "priceRange": "$$"
   })} />
 </head>
 <body class="font-sans antialiased text-gray-900 overflow-x-hidden">
