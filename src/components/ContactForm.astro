@@ -1,6 +1,6 @@
 ---
-// Contact Form with Softr webhook integration
-const webhookUrl = "https://workflows-api.softr.io/v1/workflows/a6cb893e-3ffc-485c-ae4f-42521187ce1b/executions/ea5fd3c1-5e71-473e-babd-b5f17bcbded9";
+// Contact Form with n8n webhook integration
+const webhookUrl = "https://nextgen.pocarles.com/webhook/centurysync-form";
 ---
 
 <div class="bg-gradient-to-br from-gray-50 via-white to-primary-50/30 rounded-3xl p-6 sm:p-8 md:p-10 shadow-stripe-lg reveal">
@@ -195,58 +195,25 @@ const webhookUrl = "https://workflows-api.softr.io/v1/workflows/a6cb893e-3ffc-48
     };
 
     try {
-      // Use hidden iframe technique to bypass CORS entirely
-      // This works because traditional form POSTs aren't subject to CORS
-      let iframe = document.getElementById('webhook-iframe');
-      if (!iframe) {
-        iframe = document.createElement('iframe');
-        iframe.id = 'webhook-iframe';
-        iframe.name = 'webhook-iframe';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-      }
-
-      // Create a temporary form that posts to the hidden iframe
-      const tempForm = document.createElement('form');
-      tempForm.method = 'POST';
-      tempForm.action = webhookUrl;
-      tempForm.target = 'webhook-iframe';
-      tempForm.style.display = 'none';
-
-      // Add hidden fields for each data item
-      Object.keys(formData).forEach(key => {
-        if (formData[key] !== null && formData[key] !== undefined) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = String(formData[key]);
-          tempForm.appendChild(input);
-        }
+      // POST JSON to n8n webhook (supports CORS)
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       });
 
-      // Submit the form to the iframe
-      document.body.appendChild(tempForm);
-      tempForm.submit();
-
-      // Clean up the temporary form after a short delay
-      setTimeout(() => {
-        if (tempForm.parentNode) {
-          document.body.removeChild(tempForm);
-        }
-      }, 1000);
-
-      // Show success after a brief delay to allow the form to submit
-      setTimeout(() => {
+      if (response.ok) {
         successMsg.classList.remove('hidden');
         form.reset();
-        submitBtn.disabled = false;
-        btnText.classList.remove('hidden');
-        btnSpinner.classList.add('hidden');
-      }, 1500);
-
+      } else {
+        throw new Error('Server responded with error');
+      }
     } catch (error) {
       console.error('Form submission error:', error);
       errorMsg.classList.remove('hidden');
+    } finally {
       submitBtn.disabled = false;
       btnText.classList.remove('hidden');
       btnSpinner.classList.add('hidden');
