@@ -113,6 +113,9 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
 
   <!-- Scroll Reveal Script -->
   <script is:inline>
+    // Enable JS-based animations (progressive enhancement)
+    document.documentElement.classList.add('js-enabled');
+
     // Premium scroll reveal animation with stagger support
     function reveal() {
       const reveals = document.querySelectorAll('.reveal');
