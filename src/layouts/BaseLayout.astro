@@ -204,6 +204,78 @@ const siteTitle = title === "Home" ? "CenturySync | Smarter Florida COA Manageme
     }, { threshold: 0.5 });
     const statsSection = document.querySelector('.counter')?.closest('section');
     if (statsSection) counterObserver.observe(statsSection);
+
+    // Testimonial Carousel
+    (function() {
+      const carousel = document.getElementById('testimonial-carousel');
+      if (!carousel) return;
+
+      const slides = carousel.querySelectorAll('.testimonial-slide');
+      const dots = carousel.querySelectorAll('.testimonial-dot');
+      let currentIndex = 0;
+      let autoplayInterval;
+      const AUTOPLAY_DELAY = 6000; // 6 seconds
+
+      function showSlide(index) {
+        // Hide all slides
+        slides.forEach((slide, i) => {
+          slide.classList.remove('active');
+          dots[i]?.classList.remove('active');
+          dots[i]?.setAttribute('aria-selected', 'false');
+        });
+
+        // Show target slide
+        slides[index]?.classList.add('active');
+        dots[index]?.classList.add('active');
+        dots[index]?.setAttribute('aria-selected', 'true');
+        currentIndex = index;
+      }
+
+      function nextSlide() {
+        const next = (currentIndex + 1) % slides.length;
+        showSlide(next);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        autoplayInterval = setInterval(nextSlide, AUTOPLAY_DELAY);
+      }
+
+      function stopAutoplay() {
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+        }
+      }
+
+      // Dot click handlers
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          showSlide(index);
+          startAutoplay(); // Reset autoplay on manual navigation
+        });
+      });
+
+      // Pause on hover for better UX
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', startAutoplay);
+
+      // Pause when not visible (performance)
+      const carouselObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            startAutoplay();
+          } else {
+            stopAutoplay();
+          }
+        });
+      }, { threshold: 0.3 });
+      carouselObserver.observe(carousel);
+
+      // Respect reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        stopAutoplay();
+      }
+    })();
   </script>
 </body>
 </html>
