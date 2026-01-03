@@ -224,7 +224,7 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 
 ## Team Perspectives
 
-When rewriting copy, consider these four perspectives and iterate until compromise:
+When rewriting copy, consider these five perspectives and iterate until compromise:
 
 1. **Direct Response Strategist**
    - Focus: Conversion, urgency, benefits over features
@@ -241,6 +241,10 @@ When rewriting copy, consider these four perspectives and iterate until compromi
 4. **Editor/Clarity Specialist**
    - Focus: Concision, readability, senior-friendly language
    - Questions: Is this too long? Too jargon-y? Would a 70-year-old understand immediately?
+
+5. **SEO & AI Search Specialist**
+   - Focus: Search visibility, AI answer engine optimization, semantic relevance
+   - Questions: Will this rank for relevant queries? Is the content structured for AI snippets? Are we using natural language patterns that match how people search? Does the copy include entities and context that help search engines understand the topic?
 
 ## Style Guidelines
 
