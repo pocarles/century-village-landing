@@ -83,16 +83,14 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogIm
   <!-- Font with display=swap for better performance -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Google Analytics Placeholder -->
-  <!-- TODO: Replace GA_MEASUREMENT_ID with your Google Analytics 4 Measurement ID -->
+  <!-- Google Analytics 4 -->
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JJ1J659Z22"></script>
   <script is:inline>
-    // Google Analytics 4 placeholder
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    // gtag('config', 'GA_MEASUREMENT_ID'); // Uncomment and replace with your GA4 ID
+    gtag('config', 'G-JJ1J659Z22');
   </script>
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
 
   <!-- JSON-LD Structured Data: Organization -->
   <script type="application/ld+json" set:html={JSON.stringify({
