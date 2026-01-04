@@ -9,20 +9,106 @@
 - **Demographics**: Primarily seniors (55+ community)
 - **Primary Action**: Demo request form submission
 
-## Tech Stack
+---
 
+## Tech Stack & Infrastructure
+
+### Framework & Build
 - **Framework**: Astro 5.x (static site generation)
 - **Styling**: Tailwind CSS v3 with custom design system
 - **Fonts**: Inter (Google Fonts)
-- **Deployment**: Static hosting
-- **Key Files**:
-  - `src/pages/index.astro` - Main homepage
-  - `src/layouts/BaseLayout.astro` - Global layout with meta, scripts
-  - `src/styles/global.css` - Custom CSS, design tokens
-  - `src/components/Header.astro` - Navigation
-  - `src/components/Footer.astro` - Footer
-  - `src/components/ContactForm.astro` - Demo request form
-  - `tailwind.config.cjs` - Tailwind configuration
+- **Build**: `npm run build` outputs to `dist/`
+
+### Deployment
+- **Hosting**: GitHub Pages (static)
+- **Domain**: centurysync.com
+- **DNS**: Cloudflare (proxied)
+- **SSL**: Pending - GitHub Pages certificate needs to be provisioned, then "Enforce HTTPS" enabled in repo settings
+
+### Form Submission Pipeline
+- **Form Component**: `src/components/ContactForm.astro`
+- **Webhook**: `https://nextgen.pocarles.com/webhook/centurysync-form`
+- **Automation**: n8n workflow "CenturySync Form Webhook Proxy" (ID: `NUDYeMpDEU7oiMbT`)
+- **CRM**: Softr (CenturySync CRM Leads table)
+- **Email Notifications**: Gmail via n8n → `po@nambus-suspensions.com`
+
+#### n8n Workflow Details
+The workflow has 3 nodes:
+1. **Webhook** - Receives POST with JSON body, CORS configured for centurysync.com
+2. **Softr** - Creates lead record with field mapping:
+   - `{{ $json.body.email }}` → Email
+   - `{{ $json.body.firstName }}` → First Name
+   - `{{ $json.body.lastName }}` → Last Name
+   - `{{ $json.body.phone }}` → Phone
+   - `{{ $json.body.building }}` → Building
+   - `{{ $json.body.units }}` → Units
+   - `{{ $json.body.role }}` → Role
+   - `{{ $json.body.message }}` → Message
+3. **Gmail** - Sends HTML notification email
+
+**Important**: Softr node uses `defineBelow` mapping mode (not `autoMapInputData`) because form data is nested in `body` object.
+
+### Key Files
+- `src/pages/index.astro` - Main homepage with FAQPage schema
+- `src/layouts/BaseLayout.astro` - Global layout with meta, JSON-LD schemas
+- `src/styles/global.css` - Custom CSS, design tokens
+- `src/components/Header.astro` - Navigation
+- `src/components/Footer.astro` - Footer with social links
+- `src/components/ContactForm.astro` - Demo request form with n8n webhook
+- `src/pages/changelog.astro` - Product changelog
+- `src/pages/privacy-policy.astro` - Privacy policy
+- `src/pages/terms-of-service.astro` - Terms of service
+- `src/pages/resources/survival-guide.astro` - Free PDF guide landing page
+- `tailwind.config.cjs` - Tailwind configuration
+- `astro.config.mjs` - Astro configuration (site: centurysync.com)
+
+---
+
+## SEO Implementation
+
+### JSON-LD Structured Data (all in BaseLayout.astro)
+- **Organization** - Company info, contact, social links
+- **WebSite** - Site name, URL, publisher reference
+- **SoftwareApplication** - App details, pricing, features
+- **LocalBusiness** - Office hours (Wednesday 2-5 PM)
+
+### Page-Specific Schemas
+- **index.astro** - FAQPage schema (6 Q&A pairs)
+- **changelog.astro** - BreadcrumbList (Home → Changelog)
+- **privacy-policy.astro** - BreadcrumbList (Home → Privacy Policy)
+- **terms-of-service.astro** - BreadcrumbList (Home → Terms of Service)
+- **survival-guide.astro** - BreadcrumbList (Home → Resources → Survival Guide)
+
+### Meta Tags
+- Open Graph tags for social sharing
+- Twitter Card tags
+- Canonical URLs
+- Robots directives
+- Favicon set (ico, png, apple-touch-icon, webmanifest)
+
+---
+
+## Current Status
+
+### Working ✅
+- Static site builds and deploys to GitHub Pages
+- Form submission via n8n webhook (CORS enabled)
+- Lead records created in Softr CRM
+- Email notifications sent to po@nambus-suspensions.com
+- All SEO schemas implemented
+- Social links (Facebook, Instagram) in footer
+- Mobile-responsive design
+- Reveal animations on scroll
+
+### Pending ⏳
+- **SSL Certificate**: GitHub Pages needs to provision certificate for centurysync.com, then enable "Enforce HTTPS" in Settings → Pages
+- **Copy Rewrite**: See "Copy Audit Findings" section below
+- **Real Testimonials**: Current testimonials are fictional placeholders
+
+### Known Issues
+- Email notifications go to po@nambus-suspensions.com (not po@centurysync.com) - update in n8n Gmail node when ready
+
+---
 
 ## Verified Product Features
 
@@ -62,6 +148,8 @@ These features have been confirmed as **actually existing** in the product:
 - Native Android app
 - Push notifications
 
+---
+
 ## Key Differentiators (USE THESE IN COPY)
 
 1. **Founder Story**: Founder is a Century Village board member AND multi-unit owner - built it for his own needs first
@@ -71,6 +159,8 @@ These features have been confirmed as **actually existing** in the product:
 5. **AI Technology**: Cutting-edge AI features (document summaries, search)
 6. **Breakeven Philosophy**: Not VC-backed, focused on sustainability over aggressive growth
 7. **Cross-Building Forum**: Unique feature - boards can collaborate across all 309 associations
+
+---
 
 ## Legal & Copy Constraints
 
@@ -100,7 +190,7 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 ## Section-by-Section Analysis
 
 ### 1. HERO SECTION
-**Location**: Lines 7-175 of index.astro
+**Location**: Lines 66-175 of index.astro
 
 **Current Copy Issues**:
 - Badge "Your neighbors on Haverhill Road are already using it" - good social proof concept
@@ -115,7 +205,6 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 - Add urgency or specific pain point
 
 ### 2. PAIN POINTS SECTION
-**Location**: Lines 177-227
 
 **Current Copy Issues**:
 - Good structure (3 pain points)
@@ -129,7 +218,6 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 - Consider replacing "Legacy Infrastructure" with more urgent pain
 
 ### 3. COMPLIANCE SECTION
-**Location**: Lines 229-277
 
 **Current Copy Issues**:
 - **LEGAL RISK**: "HB 1021 & HB 913 Ready" implies legal compliance guarantee
@@ -142,7 +230,6 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 - Focus on document organization, not legal compliance
 
 ### 4. FEATURES SECTION
-**Location**: Lines 279-376
 
 **Current Copy Issues**:
 - Shows 6 features, misses best differentiators
@@ -157,7 +244,6 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 - Make descriptions more specific to CV context
 
 ### 5. TESTIMONIALS SECTION
-**Location**: Lines 378-461
 
 **Current Copy Issues**:
 - **LEGAL RISK**: Fictional testimonials with real-sounding names
@@ -170,7 +256,6 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 - Consider "What board members tell us" framing
 
 ### 6. HOW IT WORKS SECTION
-**Location**: Lines 463-507
 
 **Current Copy Issues**:
 - Solid 3-step structure
@@ -182,7 +267,6 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 - Could add more specificity to local/in-person aspect
 
 ### 7. PRICING SECTION
-**Location**: Lines 509-558
 
 **Current Copy Issues**:
 - **POTENTIAL ISSUE**: "Special Offer for Century Village" - is this actually special or standard?
@@ -195,7 +279,6 @@ Good structure and visual design, but generic SaaS language, missed differentiat
 - Emphasize value of included features
 
 ### 8. DEMO FORM SECTION
-**Location**: Lines 560-569
 
 **Current Copy Issues**:
 - Very brief, functional
@@ -256,27 +339,6 @@ When rewriting copy, consider these five perspectives and iterate until compromi
 
 ---
 
-# PENDING TASKS
-
-## Immediate Next Steps (Copy Rewrite)
-
-1. [ ] Rewrite Hero section with team perspective iteration
-2. [ ] Rewrite Features section to include AI, forum, public sites
-3. [ ] Fix Compliance section legal language
-4. [ ] Fix Testimonials section (disclosure or replacement)
-5. [ ] Polish remaining sections
-6. [ ] Implement all approved changes
-
-## UI/UX Plan (Separate Task)
-
-A UI/UX overhaul plan exists at `~/.claude/plans/bright-jumping-origami.md` covering:
-- Typography refinements
-- Micro-interactions
-- Mobile optimizations
-- Accessibility improvements
-
----
-
 # COMMANDS
 
 ```bash
@@ -288,6 +350,30 @@ npm run preview      # Preview production build
 
 ---
 
+# QUICK START FOR NEXT SESSION
+
+## If SSL is still broken:
+1. Go to GitHub repo → Settings → Pages
+2. Check if certificate has been provisioned for centurysync.com
+3. If yes, enable "Enforce HTTPS"
+4. If no, wait for GitHub to provision (can take up to 24 hours after DNS setup)
+
+## If form submissions aren't working:
+1. Check n8n workflow status: `mcp__n8n__list_workflows`
+2. Check recent executions: `mcp__n8n__list_executions` with workflowId `NUDYeMpDEU7oiMbT`
+3. If workflow is inactive, activate it: `mcp__n8n__activate_workflow`
+4. Test webhook: POST to `https://nextgen.pocarles.com/webhook/centurysync-form`
+
+## To change notification email:
+1. Go to n8n → "CenturySync Form Webhook Proxy" workflow
+2. Edit Gmail node
+3. Change "To" field from po@nambus-suspensions.com to desired email
+
+## To add a changelog entry:
+Use the `/changelog` skill or manually add to the `changelog` array in `src/pages/changelog.astro`
+
+---
+
 # NOTES
 
 - Testimonials are currently fictional placeholders - need real testimonials or disclosure
@@ -296,3 +382,4 @@ npm run preview      # Preview production build
 - Founder story (CV board member + multi-unit owner) is underutilized
 - AI features are a major differentiator but barely mentioned
 - Cross-building board forum is unique but not highlighted
+- Social links: Facebook (profile.php?id=61575503064716), Instagram (@century.sync)

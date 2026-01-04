@@ -1,11 +1,38 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// BreadcrumbList schema for SEO
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://centurysync.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Resources",
+      "item": "https://centurysync.com/resources"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "2026 Florida COA Board Member Survival Guide",
+      "item": "https://centurysync.com/resources/survival-guide"
+    }
+  ]
+};
 ---
 
 <BaseLayout
   title="2026 Florida COA Board Member Survival Guide"
   description="Free guide covering the eight essentials every Florida condominium association board member must understand in 2026. Stay compliant with HB 1021, HB 913, and more."
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <section class="pt-32 pb-20 bg-gradient-to-br from-gray-50 via-primary-50/30 to-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12 reveal">
