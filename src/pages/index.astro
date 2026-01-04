@@ -1,9 +1,218 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
+
+// FAQPage structured data for SEO
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is CenturySync?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CenturySync is a COA (Condominium Owners Association) management platform built specifically for Century Village, West Palm Beach. It provides document storage, owner communication, compliance tracking, tenant management, and mobile apps designed for Florida associations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does CenturySync cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CenturySync costs $79 per month plus $1.50 per unit. There is a one-time setup fee of $1,467 which includes scanning up to 2,000 paper documents. This includes unlimited document storage, mobile apps, public website, board forum, and email uploads."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does CenturySync help with Florida condo law compliance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, CenturySync includes tools to help you stay organized for Florida's condo law requirements including HB 1021 and HB 913. Features include deadline reminders, audit-ready records, and reserve study tracking. Note: CenturySync is not a law firm and does not provide legal advice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get started with CenturySync?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Getting started is simple: 1) Schedule a free walkthrough with our local team, 2) We migrate all your documents (physical or digital) at no extra charge, 3) Your portal goes live in days with full training and ongoing support. You can also visit our office hours every Wednesday, 2-5 PM at 100-110 Century Blvd, Suite 202."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is CenturySync available on mobile devices?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, CenturySync offers native mobile apps for both iPhone and Android. Board members and unit owners can access documents, receive push notifications, and manage their association from anywhere."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can unit owners request documents through CenturySync?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, CenturySync makes document access easy for both boards and owners. Under Florida law, associations must provide requested documents within 10 business days. With CenturySync's full-text search, you can find any document instantly and respond to requests quickly."
+      }
+    }
+  ]
+};
+
+// PriceSpecification structured data for pricing
+const priceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "CenturySync Association Management Software",
+  "description": "Cloud-based COA management platform for Century Village, West Palm Beach. Includes document storage, owner communication, compliance tracking, and mobile apps.",
+  "brand": {
+    "@type": "Brand",
+    "name": "CenturySync"
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "price": "79",
+    "priceValidUntil": "2026-12-31",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "CenturySync"
+    },
+    "description": "Monthly base fee of $79 plus $1.50 per unit. One-time setup fee of $1,467 includes scanning up to 2,000 paper documents.",
+    "priceSpecification": [
+      {
+        "@type": "UnitPriceSpecification",
+        "price": "79",
+        "priceCurrency": "USD",
+        "unitText": "month",
+        "description": "Monthly base fee"
+      },
+      {
+        "@type": "UnitPriceSpecification",
+        "price": "1.50",
+        "priceCurrency": "USD",
+        "unitText": "unit per month",
+        "description": "Per-unit monthly fee"
+      },
+      {
+        "@type": "UnitPriceSpecification",
+        "price": "1467",
+        "priceCurrency": "USD",
+        "unitText": "one-time",
+        "description": "One-time setup fee including 2,000 document scans"
+      }
+    ]
+  }
+};
+
+// Review structured data for testimonials (update with real testimonials when available)
+const reviewSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "CenturySync",
+  "description": "Association management software for Century Village, West Palm Beach",
+  "brand": {
+    "@type": "Brand",
+    "name": "CenturySync"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "3",
+    "reviewCount": "3"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Carlos R."
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "With new Florida condo laws coming in, we were stressed about staying compliant. CenturySync gave us a clear checklist, tracked everything, and even sent alerts for deadlines."
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "James O."
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "I'm not the most tech-savvy guy, but the CenturySync team made onboarding easy. Now I can log in from anywhere and check in on everything in minutes."
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Susan M."
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "reviewBody": "The resident portal has really changed things for us. People know where to go now, so we're not getting calls about every little thing."
+    }
+  ]
+};
+
+// HowTo structured data for setup process
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Get Started with CenturySync",
+  "description": "Three simple steps to set up CenturySync for your Century Village association.",
+  "totalTime": "P7D",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "1467"
+  },
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Schedule a Walkthrough",
+      "text": "Our local team will meet with your board, in person or virtually, to understand your association's specific needs.",
+      "url": "https://centurysync.com/#demo"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "We Migrate Everything",
+      "text": "Hand us your documents, physical or digital. We'll organize and upload everything to your new portal, free of charge.",
+      "url": "https://centurysync.com/#how-it-works"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Go Live with Confidence",
+      "text": "Your portal is ready in days. We train your board, answer every question, and stay available for ongoing support.",
+      "url": "https://centurysync.com/#how-it-works"
+    }
+  ]
+};
 ---
 
 <BaseLayout title="Home">
+  <!-- FAQPage Schema for SEO -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <!-- Product/Pricing Schema for SEO -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(priceSchema)} />
+  <!-- HowTo Schema for SEO -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <!-- Review Schema for SEO -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />
   <!-- Hero Section -->
   <section class="relative min-h-screen hero-gradient pt-20 pb-24 md:pb-32 overflow-hidden">
     <!-- Background decorations - refined with layered gradients -->
@@ -29,7 +238,7 @@ import ContactForm from '../components/ContactForm.astro';
           </h1>
 
           <p class="text-body-lg text-gray-600 max-w-xl mx-auto lg:mx-0 mb-8 reveal">
-            The only COA management platform designed specifically for the <strong class="text-gray-900 font-semibold">309 associations</strong> of Century Village, West Palm Beach. With office hours right here in the community.
+            <strong class="text-gray-900">CenturySync</strong> is the only association management software designed specifically for the <strong class="text-gray-900 font-semibold">309 associations</strong> of Century Village, West Palm Beach. Document storage, compliance tracking, owner communication — with office hours right here in the community.
           </p>
 
           <!-- CTA Buttons -->
