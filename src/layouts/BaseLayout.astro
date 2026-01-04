@@ -211,6 +211,52 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogIm
     },
     "priceRange": "$$"
   })} />
+
+  <!-- JSON-LD Structured Data: Event (Recurring Office Hours) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "CenturySync Office Hours",
+    "description": "Free weekly drop-in office hours for Century Village board members. Get help with CenturySync, ask questions, or schedule a demo. No appointment needed.",
+    "url": "https://centurysync.com/#pricing",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "startDate": "2026-01-08T14:00:00-05:00",
+    "endDate": "2026-01-08T17:00:00-05:00",
+    "eventSchedule": {
+      "@type": "Schedule",
+      "byDay": "https://schema.org/Wednesday",
+      "startTime": "14:00:00",
+      "endTime": "17:00:00",
+      "scheduleTimezone": "America/New_York",
+      "repeatFrequency": "P1W"
+    },
+    "location": {
+      "@type": "Place",
+      "name": "CenturySync Office - Century Village",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "100-110 Century Blvd, Suite 202",
+        "addressLocality": "West Palm Beach",
+        "addressRegion": "FL",
+        "postalCode": "33417",
+        "addressCountry": "US"
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "CenturySync",
+      "url": "https://centurysync.com"
+    },
+    "isAccessibleForFree": true,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "validFrom": "2025-01-01"
+    }
+  })} />
 </head>
 <body class="font-sans antialiased text-gray-900 overflow-x-hidden">
   <!-- Skip to content link for keyboard users -->

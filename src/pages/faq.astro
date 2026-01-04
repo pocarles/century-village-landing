@@ -268,13 +268,31 @@ const faqs = [
 
   <!-- Hero Section -->
   <section class="pt-32 pb-16 bg-gradient-to-b from-primary-50 to-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-heading-1-sm md:text-heading-1 mb-6">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb Navigation -->
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex items-center justify-center space-x-2 text-sm">
+          <li>
+            <a href="/" class="text-gray-500 hover:text-primary-600 transition-colors">Home</a>
+          </li>
+          <li class="text-gray-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </li>
+          <li>
+            <span class="text-gray-900 font-medium">FAQ</span>
+          </li>
+        </ol>
+      </nav>
+      <div class="text-center">
+        <h1 class="text-heading-1-sm md:text-heading-1 mb-6">
         Frequently Asked <span class="gradient-text">Questions</span>
       </h1>
       <p class="text-body-lg text-gray-600 max-w-2xl mx-auto">
         Everything you need to know about CenturySync, the association management platform built for Century Village, West Palm Beach.
       </p>
+      </div>
     </div>
   </section>
 
