@@ -15,8 +15,12 @@ const navLinks = [
       <!-- Logo -->
       <a href="/" class="flex items-center space-x-2 group">
         <img
-          src="/logo.png"
+          src="/logo-small.png"
+          srcset="/logo-small.png 1x, /logo-small@2x.png 2x"
           alt="CenturySync"
+          width="40"
+          height="40"
+          fetchpriority="high"
           class="h-9 md:h-10 w-auto transition-transform duration-150 ease-stripe group-hover:scale-105"
         />
         <span class="text-xl font-bold tracking-tight">
