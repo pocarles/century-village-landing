@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
 
+# Block development/preview paths (leaked from previous builder tools)
+Disallow: /tmp/
+Disallow: /_preview/
+Disallow: /workspace/
+
 # Sitemap
 Sitemap: https://centurysync.com/sitemap-index.xml
