@@ -257,38 +257,28 @@
            leading-none opacity-50;
   }
 
-  /* Testimonial Carousel */
+  /* Testimonial Carousel - Dynamic height using CSS Grid stacking */
   .testimonial-slides {
-    position: relative;
-    height: 420px; /* Increased height to ensure dots appear below card */
-    margin-bottom: 0.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .testimonial-slides {
-      height: 360px; /* Increased from 300px */
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .testimonial-slides {
-      height: 340px; /* Slightly larger on desktop for longer testimonials */
-    }
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin-bottom: 1.5rem;
   }
 
   .testimonial-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    grid-column: 1;
+    grid-row: 1;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s var(--ease-stripe), visibility 0.5s var(--ease-stripe);
+    /* Ensure inactive slides don't block interaction */
+    pointer-events: none;
   }
 
   .testimonial-slide.active {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
   }
 
   /* Navigation dots */
