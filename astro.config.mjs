@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import critters from 'astro-critters';
+import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,7 +12,7 @@ export default defineConfig({
   // base: '/century-village-landing', // Only needed for GitHub Pages subdirectory
 
   // Integrations
-  integrations: [sitemap(), tailwind(), critters()],
+  integrations: [sitemap(), tailwind(), critters(), mdx()],
 
   // Static output for GitHub Pages
   output: 'static',

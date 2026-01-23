@@ -9,9 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^6.0.2",
-    "astro": "^5.16.6"
+    "astro": "^5.16.6",
+    "pagefind": "^1.4.0"
   },
   "devDependencies": {
     "astro-critters": "^2.2.1",

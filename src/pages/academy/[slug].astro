@@ -1,0 +1,33 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import AcademyLayout from '../../layouts/AcademyLayout.astro';
+
+export async function getStaticPaths() {
+  const academyEntries = await getCollection('academy');
+  return academyEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'academy'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Get related articles (same category, excluding current)
+const allArticles = await getCollection('academy');
+const relatedArticles = allArticles
+  .filter(article => 
+    article.data.category === entry.data.category && 
+    article.slug !== entry.slug
+  )
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2);
+---
+
+<AcademyLayout entry={entry} relatedArticles={relatedArticles}>
+  <Content />
+</AcademyLayout>
