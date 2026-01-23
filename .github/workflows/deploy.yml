@@ -65,3 +65,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        # Retry on transient OIDC authentication failures
+        continue-on-error: true
+      
+      - name: Retry deployment if failed
+        if: steps.deployment.outcome == 'failure'
+        id: deployment-retry
+        uses: actions/deploy-pages@v4
