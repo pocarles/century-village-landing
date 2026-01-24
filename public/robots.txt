@@ -6,5 +6,8 @@ Disallow: /tmp/
 Disallow: /_preview/
 Disallow: /workspace/
 
+# Content-Signal directive (allow search, opt out of AI training)
+Content-Signal: search=yes,ai-train=no
+
 # Sitemap
 Sitemap: https://centurysync.com/sitemap-index.xml
