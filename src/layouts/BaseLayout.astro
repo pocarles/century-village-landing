@@ -77,6 +77,10 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogIm
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
+  <!-- Preload critical above-the-fold assets -->
+  <link rel="preload" href="/logo-small.png" as="image" fetchpriority="high">
+  <link rel="preload" href="/logo-small@2x.png" as="image" media="(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)">
+
   <!-- Google Fonts - Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,6 +89,17 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogIm
   <!-- Non-blocking font load using media swap technique -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+  <!-- Critical font fallback - matches Inter metrics to prevent CLS -->
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400 800;
+      font-display: swap;
+      src: local('Inter'), local('Inter-Regular');
+    }
+  </style>
 
   <!-- Google Analytics 4 -->
   <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JJ1J659Z22"></script>
