@@ -73,6 +73,17 @@ const shareTitle = encodeURIComponent(title);
         </ol>
       </nav>
 
+      {entry.data.image && (
+        <div class="mb-12 reveal">
+          <img
+            src={entry.data.image}
+            alt={title}
+            class="w-full rounded-3xl shadow-stripe-lg"
+            loading="eager"
+          />
+        </div>
+      )}
+
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <!-- Main Content -->
         <div class="lg:col-span-8">
