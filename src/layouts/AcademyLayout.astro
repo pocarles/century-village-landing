@@ -265,12 +265,28 @@ const shareTitle = encodeURIComponent(title);
               </p>
               <form id="academy-newsletter-form" class="space-y-3">
                 <input
+                  type="text"
+                  id="academy-firstName"
+                  name="firstName"
+                  placeholder="First name"
+                  required
+                  class="w-full px-4 py-2 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white text-sm"
+                />
+                <input
+                  type="text"
+                  id="academy-lastName"
+                  name="lastName"
+                  placeholder="Last name"
+                  required
+                  class="w-full px-4 py-2 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white text-sm"
+                />
+                <input
                   type="email"
                   id="academy-email"
                   name="email"
                   placeholder="your@email.com"
                   required
-                  class="w-full px-4 py-2 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+                  class="w-full px-4 py-2 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white text-sm"
                 />
                 <button
                   type="submit"
@@ -323,6 +339,8 @@ const shareTitle = encodeURIComponent(title);
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
+                      firstName: form.firstName.value,
+                      lastName: form.lastName.value,
                       email: form.email.value,
                       source: 'centurysync-academy',
                       subscribedTo: 'academy-updates',
